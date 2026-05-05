@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Church, LayoutDashboard, Users, CalendarCheck, Bell, LogOut, User, Send } from "lucide-react";
+import { LayoutDashboard, Users, CalendarCheck, Bell, LogOut, User, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo-cfa.png";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -29,7 +30,7 @@ export const AdminLayout = ({ children, title }: AdminLayoutProps) => {
       {/* Sidebar */}
       <aside className="hidden md:flex w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
         <div className="p-5 flex items-center gap-3 border-b border-sidebar-border">
-          <Church className="h-7 w-7 text-sidebar-primary" />
+          <img src={logo} alt="CFA" className="h-10 w-auto" />
           <div>
             <p className="font-serif text-lg leading-tight">CFA</p>
             <p className="text-xs opacity-70">Administración</p>
@@ -98,7 +99,7 @@ export const MemberLayout = ({ children, title }: AdminLayoutProps) => {
       {/* Sidebar */}
       <aside className="hidden md:flex w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
         <div className="p-5 flex items-center gap-3 border-b border-sidebar-border">
-          <Church className="h-7 w-7 text-sidebar-primary" />
+          <img src={logo} alt="CFA" className="h-10 w-auto" />
           <div>
             <p className="font-serif text-lg leading-tight">CFA</p>
             <p className="text-xs opacity-70">Mi Cuenta</p>

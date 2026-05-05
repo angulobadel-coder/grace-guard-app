@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Church, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import logo from "@/assets/logo-cfa.png";
 
 const RegisterMember = () => {
   const navigate = useNavigate();
@@ -16,71 +15,67 @@ const RegisterMember = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (form.password.length < 6) {
-      toast.error("La contraseña debe tener al menos 6 caracteres");
-      return;
-    }
+    if (form.password.length < 6) return toast.error("La contraseña debe tener al menos 6 caracteres");
     setLoading(true);
-    // TODO: integrate with Supabase auth
     setTimeout(() => {
       toast.success("Cuenta de miembro creada");
       navigate("/login");
       setLoading(false);
-    }, 1000);
+    }, 800);
   };
 
   const update = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [field]: e.target.value }));
 
+  const fields = [
+    { id: "name", label: "Nombre completo", type: "text", placeholder: "María García", required: true },
+    { id: "phone", label: "Teléfono", type: "tel", placeholder: "+1 234 567 8900", required: true },
+    { id: "email", label: "Correo electrónico", type: "email", placeholder: "correo@ejemplo.com", required: true },
+    { id: "password", label: "Contraseña", type: "password", placeholder: "••••••••", required: true },
+    { id: "birthdate", label: "Fecha de nacimiento", type: "date", placeholder: "", required: true },
+    { id: "address", label: "Dirección (opcional)", type: "text", placeholder: "Calle, Ciudad", required: false },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
-      <Card className="w-full max-w-md animate-fade-in">
-        <CardHeader className="text-center">
-          <Link to="/" className="inline-flex items-center gap-2 justify-center mb-2">
-            <Church className="h-8 w-8 text-accent" />
-          </Link>
-          <CardTitle className="text-2xl flex items-center justify-center gap-2">
-            <Users className="h-5 w-5 text-accent" />
-            Registro de Miembro
-          </CardTitle>
-          <CardDescription>Únete a la familia CFA</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Nombre completo</Label>
-              <Input id="name" placeholder="María García" value={form.name} onChange={update("name")} required />
+    <div className="halos relative min-h-screen flex items-center justify-center px-4 py-10 overflow-hidden">
+      <div className="halo-blue" />
+      <div className="relative z-10 w-full max-w-md glass p-8 sm:p-10 animate-fade-in">
+        <Link to="/" className="flex justify-center mb-4">
+          <img src={logo} alt="CFA" className="h-24 w-auto drop-shadow-2xl" />
+        </Link>
+        <div className="text-center mb-6">
+          <h1 className="text-2xl flex items-center justify-center gap-2">
+            <Users className="h-5 w-5 text-primary" /> Registro de Miembro
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">Únete a la familia CFA</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {fields.map((f) => (
+            <div key={f.id} className="space-y-2">
+              <Label htmlFor={f.id} className="text-foreground/80">{f.label}</Label>
+              <input
+                id={f.id}
+                type={f.type}
+                placeholder={f.placeholder}
+                value={(form as any)[f.id]}
+                onChange={update(f.id)}
+                required={f.required}
+                className="glass-input w-full h-11 px-4 text-sm"
+              />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Teléfono</Label>
-              <Input id="phone" type="tel" placeholder="+1 234 567 8900" value={form.phone} onChange={update("phone")} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Correo electrónico</Label>
-              <Input id="email" type="email" placeholder="correo@ejemplo.com" value={form.email} onChange={update("email")} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" placeholder="••••••••" value={form.password} onChange={update("password")} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="birthdate">Fecha de nacimiento</Label>
-              <Input id="birthdate" type="date" value={form.birthdate} onChange={update("birthdate")} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="address">Dirección (opcional)</Label>
-              <Input id="address" placeholder="Calle, Ciudad" value={form.address} onChange={update("address")} />
-            </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creando cuenta..." : "Crear cuenta"}
-            </Button>
-          </form>
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            ¿Ya tienes cuenta?{" "}
-            <Link to="/login" className="text-accent hover:underline font-medium">Iniciar sesión</Link>
-          </p>
-        </CardContent>
-      </Card>
+          ))}
+
+          <Button type="submit" disabled={loading} className="btn-warm w-full h-12 rounded-xl border-0">
+            {loading ? "Creando cuenta..." : "Crear cuenta"}
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          ¿Ya tienes cuenta?{" "}
+          <Link to="/login" className="text-gradient-warm font-semibold">Iniciar sesión</Link>
+        </p>
+      </div>
     </div>
   );
 };

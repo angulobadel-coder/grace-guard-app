@@ -6,83 +6,67 @@
 
 @layer base {
   :root {
-    --background: 40 20% 97%;
-    --foreground: 220 25% 12%;
+    /* Dark purple base */
+    --background: 270 55% 8%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 12%;
+    --card: 270 30% 12%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover: 270 40% 10%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 220 50% 25%;
-    --primary-foreground: 40 30% 96%;
+    /* Warm gradient palette */
+    --primary: 22 100% 50%;          /* orange #ff8c00 */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 30% 92%;
-    --secondary-foreground: 220 25% 12%;
+    --accent: 344 100% 68%;          /* coral pink #ff5e8a */
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 40 15% 94%;
-    --muted-foreground: 220 10% 46%;
+    --magenta: 290 60% 47%;          /* purple/magenta #b14 */
+    --magenta-foreground: 0 0% 100%;
 
-    --accent: 38 75% 55%;
-    --accent-foreground: 220 50% 12%;
+    --secondary: 270 25% 18%;
+    --secondary-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    --muted: 270 20% 16%;
+    --muted-foreground: 0 0% 70%;
+
+    --destructive: 0 75% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 220 50% 25%;
+    --border: 0 0% 100%;             /* used with /10 opacity for glass */
+    --input: 0 0% 100%;
+    --ring: 22 100% 60%;
 
-    --radius: 0.625rem;
+    --radius: 1.5rem;
 
-    --sidebar-background: 220 50% 20%;
-    --sidebar-foreground: 40 30% 96%;
-    --sidebar-primary: 38 75% 55%;
-    --sidebar-primary-foreground: 220 50% 12%;
-    --sidebar-accent: 220 45% 28%;
-    --sidebar-accent-foreground: 40 30% 96%;
-    --sidebar-border: 220 40% 30%;
-    --sidebar-ring: 38 75% 55%;
+    /* Sidebar - glass dark */
+    --sidebar-background: 270 45% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 22 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 30% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 100%;
+    --sidebar-ring: 22 100% 60%;
 
-    --success: 152 60% 40%;
+    --success: 152 60% 45%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 220 50% 12%;
+    --warning: 38 92% 55%;
+    --warning-foreground: 270 50% 10%;
+
+    /* Gradients */
+    --gradient-warm: linear-gradient(135deg, hsl(22 100% 50%) 0%, hsl(344 100% 65%) 50%, hsl(290 60% 47%) 100%);
+    --gradient-bg: radial-gradient(ellipse at top, hsl(270 60% 16%) 0%, hsl(270 55% 8%) 60%);
+
+    /* Shadows */
+    --shadow-glass: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+    --shadow-cta: 0 10px 30px -8px rgba(255, 94, 138, 0.55);
   }
 
   .dark {
-    --background: 220 30% 8%;
-    --foreground: 40 20% 95%;
-    --card: 220 30% 12%;
-    --card-foreground: 40 20% 95%;
-    --popover: 220 30% 12%;
-    --popover-foreground: 40 20% 95%;
-    --primary: 38 75% 55%;
-    --primary-foreground: 220 50% 10%;
-    --secondary: 220 25% 18%;
-    --secondary-foreground: 40 20% 95%;
-    --muted: 220 20% 16%;
-    --muted-foreground: 220 10% 60%;
-    --accent: 38 75% 55%;
-    --accent-foreground: 220 50% 10%;
-    --destructive: 0 62% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 22%;
-    --input: 220 20% 22%;
-    --ring: 38 75% 55%;
-    --sidebar-background: 220 35% 10%;
-    --sidebar-foreground: 40 20% 95%;
-    --sidebar-primary: 38 75% 55%;
-    --sidebar-primary-foreground: 220 50% 10%;
-    --sidebar-accent: 220 30% 16%;
-    --sidebar-accent-foreground: 40 20% 95%;
-    --sidebar-border: 220 25% 18%;
-    --sidebar-ring: 38 75% 55%;
-    --success: 152 50% 45%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 80% 55%;
-    --warning-foreground: 220 50% 10%;
+    /* same — app is dark by default */
   }
 }
 
@@ -91,11 +75,95 @@
     @apply border-border;
   }
 
+  html, body, #root {
+    min-height: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply text-foreground font-sans;
+    background: var(--gradient-bg);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4 {
     font-family: 'DM Serif Display', serif;
   }
 }
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: var(--shadow-glass);
+    border-radius: var(--radius);
+  }
+
+  .glass-input {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 0.75rem;
+    color: hsl(var(--foreground));
+    transition: all 0.2s ease;
+  }
+  .glass-input::placeholder { color: rgba(255,255,255,0.4); }
+  .glass-input:focus,
+  .glass-input:focus-visible {
+    outline: none;
+    border-color: rgba(255, 140, 0, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15);
+  }
+
+  /* Decorative halos / blobs */
+  .halos::before,
+  .halos::after,
+  .halos > .halo-blue {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .halos::before {
+    top: -10rem; left: -10rem;
+    width: 30rem; height: 30rem;
+    background: rgba(255, 140, 0, 0.35);
+  }
+  .halos::after {
+    bottom: -10rem; right: -10rem;
+    width: 32rem; height: 32rem;
+    background: rgba(190, 60, 200, 0.35);
+  }
+  .halos > .halo-blue {
+    top: 30%; right: -8rem;
+    width: 24rem; height: 24rem;
+    background: rgba(60, 120, 255, 0.18);
+  }
+
+  /* Warm CTA button */
+  .btn-warm {
+    background: var(--gradient-warm);
+    color: white;
+    box-shadow: var(--shadow-cta);
+    transition: all 0.2s ease;
+  }
+  .btn-warm:hover { filter: brightness(1.1); }
+  .btn-warm:active { transform: scale(0.99); }
+
+  .text-gradient-warm {
+    background: var(--gradient-warm);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.5s ease-out; }
