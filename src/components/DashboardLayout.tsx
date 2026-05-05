@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Church, LayoutDashboard, Users, CalendarCheck, Bell, LogOut, User, Send } from "lucide-react";
+import { LayoutDashboard, Users, CalendarCheck, Bell, LogOut, User, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo-cfa.png";
 
 interface AdminLayoutProps {
   children: ReactNode;
